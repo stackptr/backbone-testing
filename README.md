@@ -1,0 +1,1 @@
+This is a testing repo for playing around with Backbone and Backbone Marionette.

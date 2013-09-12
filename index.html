@@ -31,9 +31,10 @@
 
     <div class="container">
 
-      <div class="starter-template" id="#main-region">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+      <div class="starter-template">
+        <h1>Contacts</h1>
+        <div class="contact-region">
+        </div>
       </div>
 
     </div>
@@ -45,24 +46,64 @@
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
 
-    <script type="text/template" id="static-template">
-    	<h1>Static template</h1>
-    	<p>Test text</p>
+    <script type="text/template" id="contact-template">
+    	<%= firstName %> <%= lastName %>
     </script>
 
     <script type="text/javascript">
-    	var app = new Marionette.Application();
+    	// Instantinate application
+    	var App = new Marionette.Application();
 
-    	app.addRegions({main: "#main-region"})
+    	// Add a region for Marionette to modify
+    	App.addRegions({contacts: ".contact-region"});
 
-    	app.StaticView = Marionette.ItemView.extend({
-    		template: "#static-template"
-    	})
+    	// Define the Model
+    	App.Contact = Backbone.Model.extend({});
 
-    	app.on("initialize:after", function(){
-    		var staticView = new app.StaticView;
-    		app.main.show(staticView);
-    	})
+    	App.ContactCollection = Backbone.Collection.extend({
+    		model: App.Contact, // Define which model this collection holds
+    		comparator: "lastName"	// Sort contents of collection by lastName by default
+    	});
+
+    	App.ContactItemView = Marionette.ItemView.extend({
+    		tagName: "li",			// Wrap template with <li>
+    		className: "contact",	// <li class="contact">
+    		template: "#contact-template"	// Point to template
+    	});
+
+    	// Define Collection view
+    	App.ContactsView = Marionette.CollectionView.extend({
+    		tagName: "ul",					// Wrap colleciton view with <ul>
+    		itemView: App.ContactItemView	// Define the views this collection view holds.
+    	});
+
+
+
+    	App.on("initialize:after", function(){
+    		var contacts = new App.ContactCollection([
+    			{
+    				firstName: "Alice",
+    				lastName: "Murphy",
+    				phoneNumber: "999-1101"
+    			},
+    			{
+    				firstName: "Bob",
+    				lastName: "Brigham",
+    				phoneNumber: "111-2020"
+    			},
+    			{
+    				firstName: "Toby",
+    				lastName: "Walker",
+    				phoneNumber: "105-6666"
+    			}
+    		])
+
+    		App.contacts.show(new App.ContactsView({
+    			collection: contacts
+    		}));
+    	});
+
+    	App.start();
 
     </script>
 

@@ -57,29 +57,32 @@
     	// Add a region for Marionette to modify
     	App.addRegions({contacts: ".contact-region"});
 
-    	// Define the Model
+    	// Define the Model by extending Backbone.Model
     	App.Contact = Backbone.Model.extend({});
 
+    	// Define a Collection of Models
     	App.ContactCollection = Backbone.Collection.extend({
     		model: App.Contact, // Define which model this collection holds
     		comparator: "lastName"	// Sort contents of collection by lastName by default
     	});
 
+    	// Marrionette provides the ItemView which is a view that can accept a Model to supply data
     	App.ContactItemView = Marionette.ItemView.extend({
     		tagName: "li",			// Wrap template with <li>
     		className: "contact",	// <li class="contact">
     		template: "#contact-template"	// Point to template
     	});
 
-    	// Define Collection view
+    	// Marionette provides the CollectionView which is a view that accepts a Collection of ItemView
     	App.ContactsView = Marionette.CollectionView.extend({
     		tagName: "ul",					// Wrap colleciton view with <ul>
     		itemView: App.ContactItemView	// Define the views this collection view holds.
     	});
 
-
-
+    	// When app is initialized, create the data and place it in the region
     	App.on("initialize:after", function(){
+
+    		// Initialize the Collection through an array of objects
     		var contacts = new App.ContactCollection([
     			{
     				firstName: "Alice",
@@ -96,8 +99,9 @@
     				lastName: "Walker",
     				phoneNumber: "105-6666"
     			}
-    		])
+    		]);
 
+    		// In the contacts region, instantiate a collection view of contacts
     		App.contacts.show(new App.ContactsView({
     			collection: contacts
     		}));

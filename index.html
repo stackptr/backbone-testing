@@ -58,20 +58,29 @@
         <tbody>
         </tbody>
     </script>
-    <script type="text/template" id="contact-template">
+    <script type="text/template" id="contact-item">
         <td><%= firstName %></td>
         <td><%= lastName %></td>
         <td>
-            <button class="btn btn-sm contact-delete">
-                <i class="icon icon-remove"></i>
+            <a href="#" class="btn btn-default btn-sm js-show">
+                <i class="icon icon-eye-open"></i> Show
+            </a>
+            <button class="btn btn-default btn-sm js-delete">
+                <i class="icon icon-remove"></i> Delete
             </button>
         </td>
+    </script>
+    <script type="text/template" id="contact-view">
+        <h3><%= firstName %> <%= lastName %></h3>
+        <p><strong>Phone number:</strong> <%= phoneNumber %></p>
     </script>
 
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
     <script src="./assets/js/apps/contacts/list/list_view.js"></script>
     <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
+    <script src="./assets/js/apps/contacts/show/show_view.js"></script>
+    <script src="./assets/js/apps/contacts/show/show_controller.js"></script>
 
     <script type="text/javascript">
     	App.start();

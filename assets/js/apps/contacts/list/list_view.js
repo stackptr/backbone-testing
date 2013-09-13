@@ -3,14 +3,20 @@ App.module('ContactsApp.List', function(List, App, Backbone, Marionette, $, _){
 	List.Contact = Marionette.ItemView.extend({
 		tagName: "tr",
 		className: "contact",
-		template: "#contact-template",
+		template: "#contact-item",
 
 		events: {
 			"click": function(){
 				this.$el.toggleClass('warning');
 			},
 
-			"click button.contact-delete": function(e){
+			"click td a.js-show": function(e){
+				e.preventDefault();	// Stop event from following link
+				e.stopPropagation();
+				this.trigger("contact:show", this.model);
+			},
+
+			"click button.js-delete": function(e){
 				e.stopPropagation();
 				this.trigger("contact:delete", this.model);
 			}

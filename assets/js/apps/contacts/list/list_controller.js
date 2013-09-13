@@ -13,6 +13,10 @@ App.module('ContactsApp.List', function(List, App, Backbone, Marionette, $, _){
 				collection: contacts
 			});
 
+			contactsListView.on("itemview:contact:show", function(childView, model){
+				App.ContactsApp.Show.Controller.showContact(model);
+			});
+
 			contactsListView.on("itemview:contact:delete", function(childView, model){
 				contacts.remove(model);
 			});

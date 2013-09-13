@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Marionette Contact Manager</title>
-    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="./assets/css/application.css" rel="stylesheet">
   </head>
 
@@ -32,7 +33,7 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Contacts</h1>
+        <h1>Contacts List</h1>
         <div class="contact-region">
         </div>
       </div>
@@ -45,57 +46,35 @@
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
-    <script src="./assets/js/app.js"></script>
-    <script src="./assets/js/entities/contact.js"></script>
 
+    <script type="text/template" id="contact-list">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </script>
     <script type="text/template" id="contact-template">
-    	<%= firstName %> <%= lastName %>
+        <td><%= firstName %></td>
+        <td><%= lastName %></td>
+        <td>
+            <button class="btn btn-sm contact-delete">
+                <i class="icon icon-remove"></i>
+            </button>
+        </td>
     </script>
 
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
+
     <script type="text/javascript">
-    	// Marrionette provides the ItemView which is a view that can accept a Model to supply data
-    	App.ContactItemView = Marionette.ItemView.extend({
-    		tagName: "li",			// Wrap template with <li>
-    		className: "contact",	// <li class="contact">
-    		template: "#contact-template"	// Point to template
-    	});
-
-    	// Marionette provides the CollectionView which is a view that accepts a Collection of ItemView
-    	App.ContactsView = Marionette.CollectionView.extend({
-    		tagName: "ul",					// Wrap colleciton view with <ul>
-    		itemView: App.ContactItemView	// Define the views this collection view holds.
-    	});
-
-    	// When app is initialized, create the data and place it in the region
-    	App.on("initialize:after", function(){
-
-    		// Initialize the Collection through an array of objects
-    		var contacts = new App.Entities.ContactCollection([
-    			{
-    				firstName: "Alice",
-    				lastName: "Murphy",
-    				phoneNumber: "999-1101"
-    			},
-    			{
-    				firstName: "Bob",
-    				lastName: "Brigham",
-    				phoneNumber: "111-2020"
-    			},
-    			{
-    				firstName: "Toby",
-    				lastName: "Walker",
-    				phoneNumber: "105-6666"
-    			}
-    		]);
-
-    		// In the contacts region, instantiate a collection view of contacts
-    		App.contacts.show(new App.ContactsView({
-    			collection: contacts
-    		}));
-    	});
-
     	App.start();
-
     </script>
 
   </body>

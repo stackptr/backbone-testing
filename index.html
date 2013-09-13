@@ -45,27 +45,14 @@
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
 
     <script type="text/template" id="contact-template">
     	<%= firstName %> <%= lastName %>
     </script>
 
     <script type="text/javascript">
-    	// Instantinate application
-    	var App = new Marionette.Application();
-
-    	// Add a region for Marionette to modify
-    	App.addRegions({contacts: ".contact-region"});
-
-    	// Define the Model by extending Backbone.Model
-    	App.Contact = Backbone.Model.extend({});
-
-    	// Define a Collection of Models
-    	App.ContactCollection = Backbone.Collection.extend({
-    		model: App.Contact, // Define which model this collection holds
-    		comparator: "lastName"	// Sort contents of collection by lastName by default
-    	});
-
     	// Marrionette provides the ItemView which is a view that can accept a Model to supply data
     	App.ContactItemView = Marionette.ItemView.extend({
     		tagName: "li",			// Wrap template with <li>
@@ -83,7 +70,7 @@
     	App.on("initialize:after", function(){
 
     		// Initialize the Collection through an array of objects
-    		var contacts = new App.ContactCollection([
+    		var contacts = new App.Entities.ContactCollection([
     			{
     				firstName: "Alice",
     				lastName: "Murphy",

@@ -14,7 +14,7 @@ App.module('ContactsApp.List', function(List, App, Backbone, Marionette, $, _){
 			});
 
 			contactsListView.on("itemview:contact:show", function(childView, model){
-				App.ContactsApp.Show.Controller.showContact(model);
+				App.trigger("contact:show", model.get('id'));
 			});
 
 			contactsListView.on("itemview:contact:delete", function(childView, model){

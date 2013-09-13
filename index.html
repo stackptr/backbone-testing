@@ -58,11 +58,12 @@
         <tbody>
         </tbody>
     </script>
+
     <script type="text/template" id="contact-item">
         <td><%= firstName %></td>
         <td><%= lastName %></td>
         <td>
-            <a href="#" class="btn btn-default btn-sm js-show">
+            <a href="#contacts/<%= id %>" class="btn btn-default btn-sm js-show">
                 <i class="icon icon-eye-open"></i> Show
             </a>
             <button class="btn btn-default btn-sm js-delete">
@@ -70,13 +71,21 @@
             </button>
         </td>
     </script>
+
     <script type="text/template" id="contact-view">
         <h3><%= firstName %> <%= lastName %></h3>
         <p><strong>Phone number:</strong> <%= phoneNumber %></p>
     </script>
 
+    <script type="text/template" id="missing-contact-view">
+        <div class="alert alert-error">
+            <strong>Error:</strong> Contact does not exist.
+        </div>
+    </script>
+
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/apps/contacts/contacts_app.js"></script>
     <script src="./assets/js/apps/contacts/list/list_view.js"></script>
     <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
     <script src="./assets/js/apps/contacts/show/show_view.js"></script>

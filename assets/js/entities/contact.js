@@ -27,24 +27,43 @@ App.module('Entities', function(Entities, App, Backbone, Marionette, $, _){
 		contacts.forEach(function(contact) {
 			contact.save();
 		})
-		return contacts;
+		return contacts.models;
 	};
 
 	// Define a list of functions that will be publically accessible
 	var API = {	// Note API itself is still private!
 		getContactEntities: function(){
 			var contacts = new Entities.ContactCollection();
-			contacts.fetch(); // Fetch contacs via defined url
-			if (contacts.length === 0){
-				return initializeContacts();
-			}
-			return contacts;
+			var defer = $.Deferred();
+			contacts.fetch({
+				success: function(data){
+					defer.resolve(data);
+				}
+			});
+			var promise = defer.promise();
+			$.when(promise).done(function(contacts){
+				if (contacts.length === 0){
+					var models = initializeContacts();
+					contacts.reset(models);
+				}
+			});
+			return promise;
 		},
 
 		getContactEntity: function(contactId){
 			var contact = new Entities.Contact({id: contactId});
-			contact.fetch();
-			return contact;
+			var defer = $.Deferred();
+			setTimeout(function(){
+				contact.fetch({
+					success: function(data){
+						defer.resolve(data);
+					},
+					error: function(data){
+						defer.resolve(undefined);
+					}
+				});
+			}, 2000);
+			return defer.promise();
 		}
 	};
 

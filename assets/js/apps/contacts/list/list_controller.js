@@ -18,7 +18,7 @@ App.module('ContactsApp.List', function(List, App, Backbone, Marionette, $, _){
 			});
 
 			contactsListView.on("itemview:contact:delete", function(childView, model){
-				contacts.remove(model);
+				model.destroy();
 			});
 
     		App.contacts.show(contactsListView);
